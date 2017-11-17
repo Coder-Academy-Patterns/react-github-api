@@ -28,13 +28,14 @@ class ShowReadme extends React.Component {
       <div>
         { error && <p>{ error.message }</p> }
         {
-          repoChoices.map(repoName => (
+          repoChoices.map(repoNameChoice => (
             <button
-              key={ repoName }
+              key={ repoNameChoice }
+              className={ repoName === repoNameChoice ? 'active' : '' }
               onClick={ this.onChangeRepoName }
-              data-repo-name={ repoName }
+              data-repo-name={ repoNameChoice }
             >
-              { repoName }
+              { repoNameChoice }
             </button>
           ))
         }
