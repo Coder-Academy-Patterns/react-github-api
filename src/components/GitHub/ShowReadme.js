@@ -46,6 +46,7 @@ class ShowReadme extends React.Component {
     )
   }
 
+  // When props change or setState is called, this function will be called
   componentDidUpdate(prevProps, prevState) {
     const { repoName } = this.state
     if (repoName !== prevState.repoName) {
