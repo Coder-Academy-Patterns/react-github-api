@@ -1,6 +1,7 @@
 import React from 'react'
 import * as githubAPI from '../../api/github'
 import Markdown from 'react-remarkable'
+import LoadReadme from './LoadReadme'
 
 const repoChoices = [
   'facebook/react',
@@ -10,9 +11,7 @@ const repoChoices = [
 
 class ShowReadme extends React.Component {
   state = {
-    repoName: '',
-    error: null,
-    content: null
+    repoName: ''
   }
 
   onChangeRepoName = (event) => {
@@ -22,11 +21,10 @@ class ShowReadme extends React.Component {
   }
 
   render() {
-    const { repoName, error, content } = this.state
+    const { repoName } = this.state
 
     return (
       <div>
-        { error && <p>{ error.message }</p> }
         {
           repoChoices.map(repoNameChoice => (
             <button
@@ -39,29 +37,9 @@ class ShowReadme extends React.Component {
             </button>
           ))
         }
-        { content &&
-          <Markdown source={ content } />
-        }
+        <LoadReadme repoName={ repoName } />
       </div>
     )
-  }
-
-  // When props change or setState is called, this function will be called
-  componentDidUpdate(prevProps, prevState) {
-    const { repoName } = this.state
-    if (repoName !== prevState.repoName) {
-      githubAPI.readmeContentForRepo({ repoName })
-        .then((res) => {
-          const json = res.data
-          const contentBase64 = json.content
-          const content = decodeURIComponent(escape(atob(contentBase64)))
-          this.setState({ content })
-        })
-    }
-  }
-
-  componentDidCatch(error) {
-    this.setState({ error })
   }
 }
 
