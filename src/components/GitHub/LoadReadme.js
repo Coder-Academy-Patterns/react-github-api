@@ -9,7 +9,6 @@ class LoadReadme extends React.Component {
   }
 
   render() {
-    const { repoName } = this.props
     const { error, content } = this.state
 
     return (
@@ -31,6 +30,9 @@ class LoadReadme extends React.Component {
       const contentBase64 = json.content
       const content = decodeURIComponent(escape(atob(contentBase64)))
       this.setState({ content })
+    })
+    .catch((error) => {
+      this.setState({ error })
     })
   }
 
