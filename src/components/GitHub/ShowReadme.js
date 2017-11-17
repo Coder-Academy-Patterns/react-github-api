@@ -1,5 +1,6 @@
 import React from 'react'
 import * as githubAPI from '../../api/github'
+import Markdown from 'react-remarkable'
 
 const repoChoices = [
   'facebook/react',
@@ -38,7 +39,7 @@ class ShowReadme extends React.Component {
           ))
         }
         { content &&
-          <pre>{ content }</pre>
+          <Markdown source={ content } />
         }
       </div>
     )
